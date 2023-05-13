@@ -151,7 +151,7 @@ const Buscador = (props) => {
         {
           sugerencias.map((sugerencia) => {
             //console.log(sugerencia)
-            return <option className="text-center" value={sugerencia}>{sugerencia.toUpperCase()}</option>
+            return <option key={sugerencia} className="text-center" value={sugerencia}>{sugerencia.toUpperCase()}</option>
           })
         }
       </select>
