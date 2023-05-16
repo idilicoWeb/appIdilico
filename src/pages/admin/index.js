@@ -7,7 +7,9 @@ import Head from 'next/head'
 import Categoria from '../../../models/categoria'
 import Plato from '../../../models/plato'
 import connectMongo from '../../../utils/connectMongo'
-import { set } from 'mongoose'
+import { useRouter } from 'next/router'
+import { useContext } from 'react'
+import { AuthContext } from '../../context/aut-context'
 
 const CategoriaSelector = (props) => {
     const { categoria_id, categorias, setCategoriaId } = props
@@ -147,10 +149,10 @@ const PlatoEditorForm = (props) => {
     const precioRef = useRef(null)
     const [categoria_id, setCategoriaId] = useState(props.plato.categoria_id)
     const [alergenosPlato, setAlegenosPlato] = useState(props.plato.alergenos)
-
+    const authContext=useContext(AuthContext)
 
     const updatePlato = async (platoData) => {
-
+        
         const response = await fetch(
             "/api/platos",
             {
@@ -204,16 +206,18 @@ const PlatoEditorForm = (props) => {
     }
 
     const savePlato = async (platoData) => {
+        const data={...platoData,token:authContext.authState.token}
+       
         if (plato.new) {
-            createPlato(platoData)
+            createPlato(data)
         } else {
-            updatePlato(platoData)
+            updatePlato(data)
         }
 
     }
 
     const deletePlato = async (_id) => {
-
+        const token=authContext.authState.token
         const response = await fetch(
             "/api/platos",
             {
@@ -222,7 +226,7 @@ const PlatoEditorForm = (props) => {
                     "Content-Type": "application/json",
                     // 'Content-Type': 'application/x-www-form-urlencoded',
                 },
-                body: JSON.stringify({ _id })
+                body: JSON.stringify({ _id ,token})
             }
         )
         //////console.log(response.status)
@@ -413,7 +417,7 @@ const CategoriaForm = (props) => {
     const subTituloRef = useRef(null)
     const ordenRef = useRef(null)
     const [adornosCategoria, setAdornosCategoria] = useState(props.categoria.adornos)
-
+    const authContext=useContext(AuthContext)
 
     const updateCategoria = async (categoriaData) => {
 
@@ -472,15 +476,19 @@ const CategoriaForm = (props) => {
     }
 
     const saveCategoria = async (categoriaData) => {
+        const token=authContext.authState.token
+        const data={...categoriaData,token}
+
         if (categoria.new) {
-            createCategoria(categoriaData)
+            createCategoria(data)
         } else {
-            updateCategoria(categoriaData)
+            updateCategoria(data)
         }
 
     }
 
     const deleteCategoria = async (_id) => {
+        const token=authContext.authState.token
 
         const response = await fetch(
             "/api/categorias",
@@ -490,7 +498,7 @@ const CategoriaForm = (props) => {
                     "Content-Type": "application/json",
                     // 'Content-Type': 'application/x-www-form-urlencoded',
                 },
-                body: JSON.stringify({ _id })
+                body: JSON.stringify({ _id ,token})
             }
         )
 
@@ -730,6 +738,21 @@ export default function AdminIndex(props) {
     const [currentPlato, setCurrentPlato] = useState(null)
     const [currentCategoria, setCurrentCategoria] = useState(null)
     const [message, setCurrentMessage] = useState(null)
+    
+
+    const router = useRouter();
+    const authContext = useContext(AuthContext);
+
+    useEffect(() => {
+        // checks if the user is authenticated
+        if (authContext) {
+            authContext.isUserAuthenticated()
+                ? router.push("/admin")
+                : router.push("/login");
+        } 
+
+    }, []);
+
 
     useEffect(() => {
         var timer = null

@@ -1,17 +1,22 @@
 import connectMongo from '../../../utils/connectMongo';
 import Categoria from "../../../models/categoria";
 import Plato from '../../../models/plato';
+import chekToken from '../../../utils/chekToken';
 
 export default async function handler(req, res) {
-    const { method } = req;
+    var { method } = req;
+    console.log(method)
+    
+    if(method=="POST" || method=="PATCH" || method=="PUT"){
+        const isValidToken=await chekToken(req.body.token)
+        console.log("el token es valido? "+isValidToken)
+        if(!isValidToken){
+            method="FORBIDEN"
+        }
+    }
+    
     try {
         switch (method) {
-            case "GET":
-                await connectMongo()
-                const categorias = await Categoria.find()
-                res.status(200).json(categorias);
-                break;
-
             case "POST":
                 await connectMongo()
                 const categoria = new Categoria(req.body)

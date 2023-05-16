@@ -2,11 +2,18 @@
 
 import connectMongo from '../../../utils/connectMongo';
 import Plato from "../../../models/plato";
+import chekToken from '../../../utils/chekToken';
 
-
-export default  async function handler(req, res) {
-    const { method } = req;
- 
+export default async function handler(req, res) {
+    var { method } = req;
+    
+    if(method=="POST" || method=="PATCH" || method=="PUT"){
+      const isValidToken=await chekToken(req.body.token)
+      if(!isValidToken){
+            method="FORBIDEN"
+        }
+  }
+  
   switch (method) {
     case "GET":
       await connectMongo()
