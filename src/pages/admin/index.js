@@ -103,7 +103,7 @@ const PlatoItem = (props) => {
         id={`plato-${plato._id}`}
         className="flex px-2 align-center  justify-between px-1 py-3 md:px-3">
         <div
-            className="p-2 flex w-3/4"
+            className="p-2 flex w-3/4 font-bold"
         >
             {plato.nombre}
         </div>
@@ -120,8 +120,8 @@ const CategoriaItem = (props) => {
     const { categoria, platos, setCurrentPlato, setCurrentCategoria } = props
     ////console.log(platos)
     return (
-        <div key={categoria._id} className=" w-full bg-verde">
-            <p className="py-3 my-4 text-xl flex justify-between px-2 ">{categoria.titulo.toUpperCase()}
+        <div key={categoria._id} className=" w-full bg-verde rounded">
+            <p className="py-3 my-4 text-xl flex justify-between px-2 font-bold">{categoria.titulo.toUpperCase()}
                 <span
                     className="text-xs bg-rosa p-2 rounded font-bold"
                     onClick={() => { setCurrentCategoria(categoria) }}
@@ -697,7 +697,7 @@ const CategoriaEditor = (props) => {
 const CategoriaList = (props) => {
     const { visible, platosHuerfanos, categorias, platos, setCurrentPlato, setCurrentCategoria } = props
     if (visible) {
-        return <div>
+        return <div className='px-1 md:p-0'>
             {
                 categorias.map((categoria) => {
                     const platosCategoria = platos.filter(plato => plato.categoria_id == categoria._id)
@@ -790,14 +790,14 @@ export default function AdminIndex(props) {
     }, [message])
 
     return (
-        <div className="bg-rosa pt-2 grid-1 w-full min-h-screen max-w-sceen">
+        <div className="bg-rosa pt-2 flex justify-center w-full min-h-screen max-w-sceen">
             <Head>
                 <title>Idílico - Admin</title>
             </Head>
 
             <PopUp hide={() => setCurrentMessage(null)} message={message} visible={message != null} />
 
-            <div className='w-full justify-center grid p-0'>
+            {authContext.isUserAuthenticated()?<div className='w-full md:w-1/2 justify-center p-0'>
                 <PlatoEditor
                     visible={currentPlato != null && currentCategoria == null}
                     categorias={categorias}
@@ -846,7 +846,7 @@ export default function AdminIndex(props) {
                         Nueva categoria
                     </div>
                 }
-            </div>
+            </div>:null}
 
 
         </div>
