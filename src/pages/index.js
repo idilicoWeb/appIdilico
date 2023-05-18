@@ -11,16 +11,16 @@ const Hero = ({ children, hero }) => {
       <motion.div
         key={hero.image}
         className="heroSlider "
-        
+
         animate={{ opacity: 1 }}
-        exit={{opacity:0}}
+        exit={{ opacity: 0 }}
         transition={{ duration: 1, ease: "easeInOut" }}
       >
 
-        <Image  src={hero.image} fill={true}  alt={"imagen de fondo que muestra una de nuestras imagenes favoritas"}/>
-        
+        <Image src={hero.image} fit={true} alt={"imagen de fondo que muestra una de nuestras imagenes favoritas"} />
+
       </motion.div>
-      
+
     </AnimatePresence>
 
     {children}
@@ -57,7 +57,7 @@ const MenuBar = () => {
       <motion.div
         initial={{ y: -100 }}
         animate={{ y: 0 }}
-        transition={{ duration: 1, ease: "easeInOut",type: "spring", bounce: 0.5  }}
+        transition={{ duration: 1, ease: "easeInOut", type: "spring", bounce: 0.5 }}
         className="w-2/3 pl-2"
       >
         <Image alt="" src="/sello.png" width={48} height={48} priority={true} />
@@ -95,16 +95,16 @@ export default function Home() {
         <motion.div
           className="z-30"
           key={hero.text}
-          initial={{scale:0}}
-          animate={{scale:1}}
-          exit={{scale:100,backgroundColor:"rgba(50, 75, 71,0.35)",opacity:0.3}}
-          transition={{duration:2,ease:"easeInOut"}}
+          initial={{ scale: 0 }}
+          animate={{ scale: 1 }}
+          exit={{ scale: 100, backgroundColor: "rgba(50, 75, 71,0.35)", opacity: 0.3 }}
+          transition={{ duration: 2, ease: "easeInOut" }}
         >
-           <Texto text={hero.text} />
+          <Texto text={hero.text} />
         </motion.div>
-        
+
       </AnimatePresence>
-     
+
     </Hero>
   )
 }

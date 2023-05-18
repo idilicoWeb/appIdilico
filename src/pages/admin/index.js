@@ -10,6 +10,8 @@ import connectMongo from '../../../utils/connectMongo'
 import { useRouter } from 'next/router'
 import { useContext } from 'react'
 import { AuthContext } from '../../context/aut-context'
+import { AnimatePresence, motion } from 'framer-motion'
+
 
 const CategoriaSelector = (props) => {
     const { categoria_id, categorias, setCategoriaId } = props
@@ -17,14 +19,15 @@ const CategoriaSelector = (props) => {
 
     return (
         <div className="px-3 mb-6">
-            <label className="text-white block uppercase tracking-wide text-xs font-bold mb-2" for="grid-precio">
+            <label className="block uppercase tracking-wide text-xs font-bold mb-2" for="grid-precio">
                 categoria
             </label>
             <select
+
+                className='bg-verde py-2'
                 defaultValue={categoria_id}
                 onChange={() => {
                     const categoriaId = selectorRef.current.value
-                    alert(categoriaId)
                     setCategoriaId(categoriaId)
                 }}
                 ref={selectorRef}
@@ -59,12 +62,12 @@ const EditAlergenos = (props) => {
 
     return <div className="grid grid-1 px-4 justify-center mb-4">
         <p
-            className="text-white uppercase tracking-wide text-xs font-bold mb-2"
+            className="uppercase tracking-wide text-xs font-bold mb-2"
 
         >
             Alergenos
         </p>
-        <div className="grid bg-white grid-cols-7 py-4 px-2 gap-2 rounded">
+        <div className="grid bg-zinc-200 grid-cols-7 py-4 px-2 gap-2 rounded">
 
             {
                 alergenos.map((alergeno) => {
@@ -80,7 +83,7 @@ const EditAlergenos = (props) => {
                             className={`${alergeno.activo ? "" : "bg-neutral-500 grayscale"}`}>
 
                             <Image
-                                alt={"contiene el alergeno "+alergeno.titulo}
+                                alt={"contiene el alergeno " + alergeno.titulo}
                                 src={alergeno.icono}
                                 width={50}
                                 height={50}
@@ -100,13 +103,13 @@ const PlatoItem = (props) => {
         id={`plato-${plato._id}`}
         className="flex px-2 align-center  justify-between px-1 py-3 md:px-3">
         <div
-            className="text-white p-2 flex w-3/4"
+            className="p-2 flex w-3/4"
         >
             {plato.nombre}
         </div>
         <button
             onClick={() => { setCurrentPlato(plato) }}
-            className="w-1/4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+            className="w-1/4 bg-rosa text-white font-bold py-2 px-4 rounded"
         >
             Editar
         </button>
@@ -117,10 +120,10 @@ const CategoriaItem = (props) => {
     const { categoria, platos, setCurrentPlato, setCurrentCategoria } = props
     ////console.log(platos)
     return (
-        <div key={categoria._id} className=" w-full bg-zinc-700">
-            <p className="py-3 my-4 text-xl flex justify-between px-2 text-white ">{categoria.titulo.toUpperCase()}
+        <div key={categoria._id} className=" w-full bg-verde">
+            <p className="py-3 my-4 text-xl flex justify-between px-2 ">{categoria.titulo.toUpperCase()}
                 <span
-                    className="text-xs bg-zinc-900 p-2 rounded border"
+                    className="text-xs bg-rosa p-2 rounded font-bold"
                     onClick={() => { setCurrentCategoria(categoria) }}
                 >
                     Editar categoria
@@ -129,7 +132,7 @@ const CategoriaItem = (props) => {
             {platos.map(plato => <PlatoItem key={plato._id} setCurrentPlato={setCurrentPlato} plato={plato} />)}
             <div className='flex justify-center mt-4 border-t pt-2'>
                 <button
-                    className='w-1/2 bg-lime-500 mb-2 rounded'
+                    className='w-1/2 bg-rosa mb-2 rounded'
                     onClick={() => {
                         const nuevoPlato = { new: true, categoria_id: categoria._id }
                         setCurrentPlato(nuevoPlato)
@@ -149,10 +152,10 @@ const PlatoEditorForm = (props) => {
     const precioRef = useRef(null)
     const [categoria_id, setCategoriaId] = useState(props.plato.categoria_id)
     const [alergenosPlato, setAlegenosPlato] = useState(props.plato.alergenos)
-    const authContext=useContext(AuthContext)
+    const authContext = useContext(AuthContext)
 
     const updatePlato = async (platoData) => {
-        
+
         const response = await fetch(
             "/api/platos",
             {
@@ -206,8 +209,8 @@ const PlatoEditorForm = (props) => {
     }
 
     const savePlato = async (platoData) => {
-        const data={...platoData,token:authContext.authState.token}
-       
+        const data = { ...platoData, token: authContext.authState.token }
+
         if (plato.new) {
             createPlato(data)
         } else {
@@ -217,7 +220,7 @@ const PlatoEditorForm = (props) => {
     }
 
     const deletePlato = async (_id) => {
-        const token=authContext.authState.token
+        const token = authContext.authState.token
         const response = await fetch(
             "/api/platos",
             {
@@ -226,7 +229,7 @@ const PlatoEditorForm = (props) => {
                     "Content-Type": "application/json",
                     // 'Content-Type': 'application/x-www-form-urlencoded',
                 },
-                body: JSON.stringify({ _id ,token})
+                body: JSON.stringify({ _id, token })
             }
         )
         //////console.log(response.status)
@@ -245,14 +248,14 @@ const PlatoEditorForm = (props) => {
 
                 <div className="w-full w-3/5 md:w-1/2 px-3 mb-4 md:mb-0">
                     <   label
-                        className="text-white block uppercase tracking-wide text-xs font-bold mb-2"
+                        className="block uppercase tracking-wide text-xs font-bold mb-2"
                         for="grid-nombre"
                     >
                         Nombre
                     </label>
                     <input
                         id="grid-nombre"
-                        className="appearance-none block w-full border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
+                        className="appearance-none block w-full border rounded py-3 px-4 mb-3 leading-tight focus:outline-none bg-verde"
                         type="text"
                         defaultValue={plato.nombre}
                         ref={nombreRef}
@@ -260,12 +263,12 @@ const PlatoEditorForm = (props) => {
                     />
                 </div>
                 <div className="w-2/5 md:w-1/2 px-3">
-                    <label className="text-white block uppercase tracking-wide text-xs font-bold mb-2" for="grid-precio">
-                        €
+                    <label className="block uppercase tracking-wide text-xs font-bold mb-2" for="grid-precio">
+                        PRECIO
                     </label>
                     <input
                         id="grid-precio"
-                        className="appearance-none block w-full border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                        className="appearance-none block w-full border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none bg-verde focus:border-gray-500"
                         type="number"
                         defaultValue={plato.precio}
                         ref={precioRef}
@@ -277,13 +280,13 @@ const PlatoEditorForm = (props) => {
             <div className="w-full px-3 mb-6 md:mb-0 ">
                 <label
                     for="descripcion"
-                    className="text-white block uppercase tracking-wide text-xs font-bold mb-2">
+                    className="block uppercase tracking-wide text-xs font-bold mb-2">
                     Descripcion
                 </label>
                 <textarea
                     id="descripcion"
                     rows={7}
-                    className="p-2.5 h-full w-full h-full text-sm text-gray-900 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    className="p-2.5 h-full w-full h-full text-sm rounded-lg border bg-verde"
                     defaultValue={plato.descripcion}
                     ref={descripcionRef}
                 />
@@ -293,7 +296,7 @@ const PlatoEditorForm = (props) => {
 
             <div className='flex float md:fixed p-2 w-full justify-around gap-2  bottom-4'>
                 <button
-                    className='btn w-2/3   bg-lime-500 rounded  text-white'
+                    className='btn w-2/3   bg-verde rounded '
                     onClick={(e) => {
                         e.preventDefault()
                         var newNombre = nombreRef.current.value
@@ -346,11 +349,17 @@ const PlatoEditor = (props) => {
         categorias,
         setPlatos,
         setCurrentMessage } = props
-    if (visible) {
-        return (
-            <div className={"w-screen h-fit max-h-screen "}>
+
+    return (
+        <AnimatePresence>
+            {visible ? <motion.div
+                initial={{ x: "-100%" }}
+                animate={{ x: 0 }}
+                exit={{ x: "-100%" }}
+                className={"w-screen h-screen max-h-screen bg-rosa"}
+            >
                 <p
-                    className="flex text-xl justify-end  text-white mb-4 pr-4 pt-4"
+                    className="flex text-xl justify-end  mb-4 pr-4 pt-4"
                     onClick={() => { hide() }}>
                     X
                 </p>
@@ -362,27 +371,29 @@ const PlatoEditor = (props) => {
                     categorias={categorias}
                     setPlatos={setPlatos}
                 />
-            </div>
-        )
-    }
+            </motion.div> : null}
+        </AnimatePresence>
 
-    return null
+    )
+
+
+
 
 }
 
 const ImageSelector = (props) => {
     const { adornos, tamPantalla, currentAdorno, setAdorno } = props
 
-    const classImage = " p-2 flex flex-col rounded bg-zinc-100 "
-    const activeClass = " border border-4 border-black "
+    const classImage = " p-2 flex flex-col rounded bg-rosa border-4 border-transparent"
+    const activeClass = "border-4 border-white "
 
     return (
-        <div className='md:flex md:w-1/3 mt-2 px-3 border-r'>
+        <div className='md:flex md:w-1/3 mt-2 px-3 border-r  py-2'>
             <label
-                className="text-white block uppercase tracking-wide text-xs font-bold mb-2">
+                className="block uppercase tracking-wide text-xs font-bold mb-1">
                 {"Carta-" + tamPantalla}
             </label>
-            <div className="flex gap-3 mt-2 px-3 py-4 overflow-scroll max-h-48 ">
+            <div className="flex gap-3 mt-2 px-3 py-4 overflow-scroll max-h-48 bg-verde ">
                 <div onClick={() => setAdorno(null)} className={(currentAdorno == null ? activeClass : "") + classImage}>
 
                     <p className="text-5xl text-center">⛔</p>
@@ -418,7 +429,7 @@ const CategoriaForm = (props) => {
     const subTituloRef = useRef(null)
     const ordenRef = useRef(null)
     const [adornosCategoria, setAdornosCategoria] = useState(props.categoria.adornos)
-    const authContext=useContext(AuthContext)
+    const authContext = useContext(AuthContext)
 
     const updateCategoria = async (categoriaData) => {
 
@@ -477,8 +488,8 @@ const CategoriaForm = (props) => {
     }
 
     const saveCategoria = async (categoriaData) => {
-        const token=authContext.authState.token
-        const data={...categoriaData,token}
+        const token = authContext.authState.token
+        const data = { ...categoriaData, token }
 
         if (categoria.new) {
             createCategoria(data)
@@ -489,7 +500,7 @@ const CategoriaForm = (props) => {
     }
 
     const deleteCategoria = async (_id) => {
-        const token=authContext.authState.token
+        const token = authContext.authState.token
 
         const response = await fetch(
             "/api/categorias",
@@ -499,7 +510,7 @@ const CategoriaForm = (props) => {
                     "Content-Type": "application/json",
                     // 'Content-Type': 'application/x-www-form-urlencoded',
                 },
-                body: JSON.stringify({ _id ,token})
+                body: JSON.stringify({ _id, token })
             }
         )
 
@@ -519,14 +530,14 @@ const CategoriaForm = (props) => {
             <div className="flex">
                 <div className="w-3/5 px-3 mb-4 md:mb-0">
                     <   label
-                        className="text-white block uppercase tracking-wide text-xs font-bold mb-2"
+                        className="block uppercase tracking-wide text-xs font-bold mb-2"
                         for="grid-nombre"
                     >
                         Titulo
                     </label>
                     <input
                         id="grid-nombre"
-                        className="appearance-none block w-full border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
+                        className="appearance-none block w-full border rounded py-3 px-4 mb-3 leading-tight focus:outline-none bg-verde"
                         type="text"
                         defaultValue={categoria.titulo}
                         ref={tituloRef}
@@ -535,14 +546,14 @@ const CategoriaForm = (props) => {
                 </div>
                 <div className="w-2/5 px-3 mb-4 md:mb-0">
                     <   label
-                        className="text-white block uppercase tracking-wide text-xs font-bold mb-2"
+                        className="block uppercase tracking-wide text-xs font-bold mb-2"
                         for="grid-nombre"
                     >
                         Orden
                     </label>
                     <input
                         id="grid-nombre"
-                        className="appearance-none block w-full border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
+                        className="appearance-none block w-full border rounded py-3 px-4 mb-3 leading-tight focus:outline-none bg-verde"
                         type="text"
                         defaultValue={categoria.new ? categorias.length + 1 : categoria.orden}
                         ref={ordenRef}
@@ -554,13 +565,13 @@ const CategoriaForm = (props) => {
             <div className="w-full px-3 mb-6 md:mb-0 ">
                 <label
                     for="descripcion"
-                    className="text-white block uppercase tracking-wide text-xs font-bold mb-2">
+                    className="block uppercase tracking-wide text-xs font-bold mb-2">
                     Subtitulo
                 </label>
                 <textarea
                     id="descripcion"
                     rows={7}
-                    className="p-2.5 h-full w-full h-full text-sm text-gray-900 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    className="p-2.5 h-full w-full h-full text-sm text-gray-900 rounded-lg border bg-verde"
                     defaultValue={categoria.subtitulo}
                     ref={subTituloRef}
                 />
@@ -568,10 +579,10 @@ const CategoriaForm = (props) => {
             </div>
             <div className="w-full mt-2 px-3 ">
                 <label
-                    className="text-white block uppercase tracking-wide text-xs font-bold mb-2">
+                    className="block uppercase tracking-wide text-xs font-bold mb-2">
                     Adornos
                 </label>
-                <p className='text-white'>
+                <p className=''>
                     Los adornos son las imagenes
                     que se agregan al final de la categoria
                     utilizalas para cubrir los huecos
@@ -615,7 +626,7 @@ const CategoriaForm = (props) => {
 
             <div className='flex float md:fixed p-2 w-full justify-around gap-2  bottom-4'>
                 <button
-                    className='btn w-2/3   bg-lime-500 rounded  text-white'
+                    className='btn w-2/3   bg-verde rounded '
                     onClick={(e) => {
                         e.preventDefault()
                         var newTitulo = tituloRef.current.value
@@ -661,20 +672,26 @@ const CategoriaForm = (props) => {
 
 const CategoriaEditor = (props) => {
     const { visible, hide, categorias, categoria, adornos, setCategorias, setCurrentMessage } = props
-    if (visible) {
-        return (
-            <div className={"w-screen h-fit "}>
+
+    return (
+        <AnimatePresence>
+            {visible ? <motion.div 
+                className={"w-screen h-fit bg-rosa"}
+                initial={{x:"-100%"}}
+                animate={{x:0}}
+                exit={{x:"-100%"}}
+                >
                 <p
-                    className="flex justify-end  text-white mb-4 pr-4 pt-4"
+                    className="flex justify-end  mb-4 pr-4 pt-4"
                     onClick={() => { hide() }}>
                     Salir
                 </p>
                 <CategoriaForm hide={hide} categorias={categorias} setCategorias={setCategorias} setCurrentMessage={setCurrentMessage} adornos={adornos} categoria={categoria} />
-            </div>
-        )
-    }
+            </motion.div> : null}
+        </AnimatePresence>
 
-    return null
+    )
+
 }
 
 const CategoriaList = (props) => {
@@ -739,7 +756,7 @@ export default function AdminIndex(props) {
     const [currentPlato, setCurrentPlato] = useState(null)
     const [currentCategoria, setCurrentCategoria] = useState(null)
     const [message, setCurrentMessage] = useState(null)
-    
+
 
     const router = useRouter();
     const authContext = useContext(AuthContext);
@@ -751,10 +768,10 @@ export default function AdminIndex(props) {
         console.log(router.pathname)
         // checks if the user is authenticated
         if (authContext) {
-            authContext.isUserAuthenticated() 
-                ? router.path!="/admin"?router.push("/admin"):null
+            authContext.isUserAuthenticated()
+                ? router.path != "/admin" ? router.push("/admin") : null
                 : router.push("/login");
-        } 
+        }
 
     }, []);
 
@@ -773,50 +790,65 @@ export default function AdminIndex(props) {
     }, [message])
 
     return (
-        <div className="bg-zinc-500 pt-2 grid-1 w-full min-h-screen max-w-sceen ">
+        <div className="bg-rosa pt-2 grid-1 w-full min-h-screen max-w-sceen">
             <Head>
                 <title>Idílico - Admin</title>
             </Head>
+
             <PopUp hide={() => setCurrentMessage(null)} message={message} visible={message != null} />
-            <PlatoEditor
-                visible={currentPlato != null && currentCategoria == null}
-                categorias={categorias}
-                plato={currentPlato}
-                platos={platos}
-                hide={() => setCurrentPlato(null)}
-                setPlatos={setPlatos}
-                setCurrentMessage={setCurrentMessage}
-            />
-            <CategoriaEditor
-                visible={currentCategoria != null && currentPlato == null}
-                setCategoria={setCurrentCategoria}
-                categoria={currentCategoria}
-                categorias={categorias}
-                platos={platos}
-                adornos={adornos}
-                setCategorias={setCategorias}
-                hide={() => setCurrentCategoria(null)}
-                setCurrentMessage={setCurrentMessage}
-                platosHuerfanos={platosHuerfanos}
-            />
 
-            <CategoriaList
-                setCurrentPlato={setCurrentPlato}
-                setCurrentCategoria={setCurrentCategoria}
-                visible={currentPlato == null && currentCategoria == null}
-                categorias={categorias}
-                platos={platos}
+            <div className='w-full justify-center grid p-0'>
+                <PlatoEditor
+                    visible={currentPlato != null && currentCategoria == null}
+                    categorias={categorias}
+                    plato={currentPlato}
+                    platos={platos}
+                    hide={() => setCurrentPlato(null)}
+                    setPlatos={setPlatos}
+                    setCurrentMessage={setCurrentMessage}
+                />
+                <CategoriaEditor
+                    visible={currentCategoria != null && currentPlato == null}
+                    setCategoria={setCurrentCategoria}
+                    categoria={currentCategoria}
+                    categorias={categorias}
+                    platos={platos}
+                    adornos={adornos}
+                    setCategorias={setCategorias}
+                    hide={() => setCurrentCategoria(null)}
+                    setCurrentMessage={setCurrentMessage}
+                    platosHuerfanos={platosHuerfanos}
+                />
+                {currentPlato || currentCategoria ? null :
+                    <div
+                        className='flex justify-center bg-verde p-2 mt-5'
+                        onClick={() => setCurrentCategoria({ adornos: {}, new: true })}
+                    >
 
-            />
-            {currentPlato || currentCategoria ? null :
-                <div
-                    className='flex justify-center bg-lime-500 p-2 mt-5'
-                    onClick={() => setCurrentCategoria({ adornos: {}, new: true })}
-                >
+                        Nueva categoria
+                    </div>
+                }
 
-                    Nueva categoria
-                </div>
-            }
+                <CategoriaList
+                    setCurrentPlato={setCurrentPlato}
+                    setCurrentCategoria={setCurrentCategoria}
+                    visible={currentPlato == null && currentCategoria == null}
+                    categorias={categorias}
+                    platos={platos}
+
+                />
+                {currentPlato || currentCategoria ? null :
+                    <div
+                        className='flex justify-center bg-verde p-2 mt-5'
+                        onClick={() => setCurrentCategoria({ adornos: {}, new: true })}
+                    >
+
+                        Nueva categoria
+                    </div>
+                }
+            </div>
+
+
         </div>
 
     )
