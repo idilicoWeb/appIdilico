@@ -17,7 +17,7 @@ const Hero = ({ children, hero }) => {
         transition={{ duration: 1, ease: "easeInOut" }}
       >
 
-        <Image src={hero.image} fit={true} alt={"imagen de fondo que muestra una de nuestras imagenes favoritas"} />
+        <Image src={hero.image} fill={true} alt={"imagen de fondo que muestra una de nuestras imagenes favoritas"} />
 
       </motion.div>
 

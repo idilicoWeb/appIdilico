@@ -15,7 +15,7 @@ export default function Login (props) {
 
 
     return <main
-        classNameName='flex flex-col auto-cols-max '
+        className='flex flex-col auto-cols-max '
     >
         <Head>
             <title>Idílico - Login</title>

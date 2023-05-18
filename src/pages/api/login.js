@@ -27,17 +27,23 @@ export default async function handler(req, res) {
             case "POST":
                 await connectMongo();
                 const u = await Usuario.findOne({ correo }) // se busca un usuario con el correo proporcionado
+                
                 if (!u) { // si no se encuentra un usuario con ese correo, se envía una respuesta con un código de estado 401 (no autorizado) y un mensaje de error
                     res.status(401).json({ message: "usuario o contraseña incorrectos" })
+
                     break;
                 } else {
+
                     u.isCorrectPassword(password, async (err, same) => { // se verifica si la contraseña proporcionada es correcta para el usuario encontrado
 
                         if (!same) { // contraseña incorrecta
                             res.status(403)
-
+                         
                         } else {
+                            console.log("esto sale")
                             const token = await generateToken(u)
+                            console.log(".......................")
+                            console.log(token)
                             res.status(200).json({ token })
 
                         }
@@ -58,6 +64,7 @@ export default async function handler(req, res) {
                 break
         }
     } catch (e) {
+        console.log(e)
         res.status(501).json({ message: "ups algo salio mal" })
     }
 }
