@@ -17,7 +17,7 @@ const Hero = ({ children, hero }) => {
         transition={{ duration: 1, ease: "easeInOut" }}
       >
 
-        <Image src={hero.image} fill={true} alt={"imagen de fondo que muestra una de nuestras imagenes favoritas"} />
+        <Image className="heroImage md:heroImageMD" src={hero.image} fill={true}  alt={"imagen de fondo que muestra una de nuestras imagenes favoritas"} />
 
       </motion.div>
 
@@ -31,7 +31,7 @@ const Hero = ({ children, hero }) => {
 const Texto = (props) => {
   return (
     <div
-      className="text-xl z-20 w-screen h-screen grid content-center px-4 "
+      className="text-lg z-20 w-screen h-screen grid content-center px-4 "
 
     >
       <p className="text-center z-20 text-5xl md:text-6xl grid content-center text-white">{props.text}</p>
@@ -77,6 +77,7 @@ export default function Home() {
   const [heroes,] = useState(heroMockUp)
   const [currentHeroId, setCurrentHeroId] = useState(0)
   const [hero, setHero] = useState(heroMockUp[0])
+  
 
   useEffect(() => {
     const newId = currentHeroId + 1 < heroes.length ? currentHeroId + 1 : 0

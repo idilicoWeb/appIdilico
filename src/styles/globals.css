@@ -27,16 +27,25 @@ body {
 
 }
 
+.heroImage{
+  object-fit:cover;
+  
+}
+
+.heroImageMD{
+  object-fit:contain;
+}
+
 
 .heroSlider::before{
   content:'';
-  z-index: 19;
+  z-index: 20;
 	position: absolute;
   top: 0;
 	bottom: 0;
 	left: 0;
 	right: 0;
-	background-color: rgba(50, 75, 71,0.4);
+	background-color: rgba(50, 75, 71,0.3);
 }
 
 .fade-in {

@@ -684,7 +684,7 @@ const CategoriaEditor = (props) => {
                 <p
                     className="flex justify-end  mb-4 pr-4 pt-4"
                     onClick={() => { hide() }}>
-                    Salir
+                    X
                 </p>
                 <CategoriaForm hide={hide} categorias={categorias} setCategorias={setCategorias} setCurrentMessage={setCurrentMessage} adornos={adornos} categoria={categoria} />
             </motion.div> : null}

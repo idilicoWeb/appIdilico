@@ -40,10 +40,9 @@ export default async function handler(req, res) {
                             res.status(403)
                          
                         } else {
-                            console.log("esto sale")
+                            
                             const token = await generateToken(u)
-                            console.log(".......................")
-                            console.log(token)
+                            
                             res.status(200).json({ token })
 
                         }

@@ -8,7 +8,8 @@ import { useState } from 'react'
 import connectMongo from '../../../utils/connectMongo'
 
 import { useScrollPosition } from '@n8tb1t/use-scroll-position'
-
+import { AnimatePresence } from 'framer-motion'
+import { motion } from 'framer-motion'
 
 
 const getAlergenoById = (alergenoId) => {
@@ -22,7 +23,7 @@ const generateAlergenos = (alergenosPlatoIDs) => {
 
     {alergenosPlato.map(alergeno => {
       return <Image
-        
+
         key={alergeno._id}
         className="mr-1"
         src={alergeno.icono}
@@ -84,13 +85,19 @@ const generateAdornosCategorias = (adornos) => {
   )
 }
 
-const generateCategoria = (categoria, platos, animation) => {
+const generateCategoria = (categoria, platos) => {
   const { titulo, subtitulo, adornos } = categoria
 
   return (
 
-    <div className={"p-4 mb-4 "}>
-      <p className={'text-3xl mb-4 font-bold font-mono ' }>
+    <motion.div 
+      key={titulo}
+      className={"p-4 mb-4 "}
+      initial={{x:"-100%"}}
+      animate={{x:0}}
+      transition={{ease:"easeIn"}}
+    >
+      <p className={'text-3xl mb-4 font-bold font-mono '}>
         {titulo.toUpperCase()}
       </p>
       {subtitulo ? <p className='mb-5 font-bold'>{subtitulo}</p> : null}
@@ -99,7 +106,7 @@ const generateCategoria = (categoria, platos, animation) => {
       }
       {adornos ? generateAdornosCategorias(adornos) : null}
 
-    </div>
+    </motion.div>
 
   )
 }
@@ -122,7 +129,7 @@ const Buscador = (props) => {
 
   return <form
     onSubmit={(e) => { e.preventDefault() }}
-    className="fade-in flex w-full  pl-4 items-center m-2 right-0 lg:w-1/4 xl:w-1/6 fixed bottom-0 md:w-1/3 md:right-0">
+    className="fade-in flex w-full  pl-4 items-center m-2 right-0 lg:w-1/4 xl:w-1/6 fixed bottom-0 md:w-1/3 md:right-0 z-20">
 
     <div className="relative w-full">
 
@@ -146,7 +153,7 @@ const Buscador = (props) => {
           } else {
             setCurrentBusqueda({ titulo: "TODAS" })
             resetBuscador()
-
+            
           }
 
         }}
@@ -167,7 +174,7 @@ const Buscador = (props) => {
         setCurrentBusqueda({ titulo: "TODAS" })
       }}
       className="ml-2 text-sm font-medium bg-rosa rounded-full shadow-xl">
-      <Image src="/sello.png" width={64} height={64} alt=""/>
+      <Image src="/sello.png" width={64} height={64} alt="" />
 
       <span className="sr-only">¿Qué te apetece?</span>
 
@@ -218,10 +225,12 @@ export default function Carta(props) {
       />
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+        
+          {
+            generateCategorias(platos, categorias)
+          }
+        
 
-        {
-          generateCategorias(platos, categorias)
-        }
 
       </div>
 
