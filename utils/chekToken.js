@@ -2,7 +2,7 @@ import connectMongo from "./connectMongo"
 import Usuario from "../models/usuario"
 import { jwtVerify } from "jose"
 
-export default async function chekToken(token){
+export default async function chekToken (token){
     
    
     try{

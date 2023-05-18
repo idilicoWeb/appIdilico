@@ -80,7 +80,7 @@ const EditAlergenos = (props) => {
                             className={`${alergeno.activo ? "" : "bg-neutral-500 grayscale"}`}>
 
                             <Image
-
+                                alt={"contiene el alergeno "+alergeno.titulo}
                                 src={alergeno.icono}
                                 width={50}
                                 height={50}
@@ -398,6 +398,7 @@ const ImageSelector = (props) => {
                         className={(isActive ? activeClass : "") + classImage}>
 
                         <Image
+                            alt=""
                             className='place-self-center'
                             src={"/adornos/" + adorno}
                             width={50}
@@ -743,11 +744,15 @@ export default function AdminIndex(props) {
     const router = useRouter();
     const authContext = useContext(AuthContext);
 
+
+
+
     useEffect(() => {
+        console.log(router.pathname)
         // checks if the user is authenticated
         if (authContext) {
-            authContext.isUserAuthenticated()
-                ? router.push("/admin")
+            authContext.isUserAuthenticated() 
+                ? router.path!="/admin"?router.push("/admin"):null
                 : router.push("/login");
         } 
 

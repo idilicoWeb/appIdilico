@@ -22,6 +22,7 @@ const generateAlergenos = (alergenosPlatoIDs) => {
 
     {alergenosPlato.map(alergeno => {
       return <Image
+        
         key={alergeno._id}
         className="mr-1"
         src={alergeno.icono}
@@ -56,6 +57,7 @@ const generateAdornosCategorias = (adornos) => {
     <div>
       {s ? <div className='flex justify-center md:hidden'>
         <Image
+          alt=""
           src={s}
           width={200}
           height={50}
@@ -63,6 +65,7 @@ const generateAdornosCategorias = (adornos) => {
       </div> : null}
       {m ? <div className='hidden md:flex md:justify-center lg:hidden'>
         <Image
+          alt=""
           src={m}
           width={300}
           height={50}
@@ -70,6 +73,7 @@ const generateAdornosCategorias = (adornos) => {
       </div> : null}
       {l ? <div className='hidden lg:flex lg:justify-center'>
         <Image
+          alt=""
           src={l}
           width={300}
           height={200}
@@ -163,7 +167,7 @@ const Buscador = (props) => {
         setCurrentBusqueda({ titulo: "TODAS" })
       }}
       className="ml-2 text-sm font-medium bg-rosa rounded-full shadow-xl">
-      <Image src="/sello.png" width={64} height={64} />
+      <Image src="/sello.png" width={64} height={64} alt=""/>
 
       <span className="sr-only">¿Qué te apetece?</span>
 
@@ -199,9 +203,10 @@ export default function Carta(props) {
       <div className='flex justify-around border-b borde_abajo'>
         <Image
           src="/cabecera.png"
+          alt="imagen de cabecera de la carta idilico come bien, come rico"
           width={500}
           height={100}
-          alt="logo empresa"
+          priority={true}
         />
       </div>
       <Buscador

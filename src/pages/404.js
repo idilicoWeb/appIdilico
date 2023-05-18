@@ -9,7 +9,9 @@ export default function Error404 (){
       </Head>
             <div className="w-full flex justify-center mb-10 px-6">
                 <Image
+                alt="Has entrado en una pagina erronea revisa la direccion o ponte en contacto con nosotros"
                 src="/sello.png"
+                priority={true}
                 width={400}
                 height={400}
             />
