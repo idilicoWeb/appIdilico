@@ -90,7 +90,9 @@ export default function Home() {
 
   return (
     <Hero hero={hero}>
-
+       <Head>
+        <title>IIdilico</title>
+      </Head>
       <MenuBar />
       <AnimatePresence>
         <motion.div
