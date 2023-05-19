@@ -103,7 +103,7 @@ const PlatoItem = (props) => {
         id={`plato-${plato._id}`}
         className="flex px-2 align-center  justify-between px-1 py-3 md:px-3">
         <div
-            className="p-2 flex w-3/4"
+            className="p-2 flex w-3/4 font-bold lg:text-xl"
         >
             {plato.nombre}
         </div>
@@ -121,7 +121,7 @@ const CategoriaItem = (props) => {
     ////console.log(platos)
     return (
         <div key={categoria._id} className="shadow-xl w-full bg-verde">
-            <p className="py-3 my-4 text-xl flex justify-between px-2 ">{categoria.titulo.toUpperCase()}
+            <p className="cursor-pointer py-3 my-4 text-xl flex justify-between px-2 ">{categoria.titulo.toUpperCase()}
                 <span
                     className="text-xs bg-rosa p-2 rounded font-bold"
                     onClick={() => { setCurrentCategoria(categoria) }}
@@ -321,7 +321,7 @@ const PlatoEditorForm = (props) => {
                 </button>
                 <button
                     disabled={plato.new}
-                    className='btn w-1/3 bg-rose-500   bg-lime-500 rounded text-white'
+                    className='cursor-pointer btn w-1/3 bg-rose-500   bg-lime-500 rounded text-white'
                     onClick={(e) => {
                         e.preventDefault()
                         let acepta = confirm("¿Borrar?");
@@ -356,10 +356,10 @@ const PlatoEditor = (props) => {
                 initial={{ x: "-100%" }}
                 animate={{ x: 0 }}
                 exit={{ x: "-100%" }}
-                className={"md:w-3/4 w-screen h-screen max-h-screen bg-verde"}
+                className={"md:w-full lg:w-full w-screen h-screen max-h-screen "}
             >
                 <p
-                    className="flex text-xl justify-end  mb-4 pr-4 pt-4"
+                    className="cursor-pointer   flex text-xl justify-end  mb-4 pr-4 pt-4"
                     onClick={() => { hide() }}>
                     X
                 </p>
@@ -650,7 +650,7 @@ const CategoriaForm = (props) => {
                 </button>
                 <button
                     disabled={categoria.new}
-                    className='btn w-1/3 bg-rose-500   bg-lime-500 rounded text-white'
+                    className='cursor-pointer btn w-1/3 bg-rose-500 rounded text-white'
                     onClick={(e) => {
                         e.preventDefault()
                         let acepta = confirm("¿Borrar?");
@@ -676,7 +676,7 @@ const CategoriaEditor = (props) => {
     return (
         <AnimatePresence>
             {visible ? <motion.div 
-                className={"bg-rosa"}
+                className={"bg-rosa cursor-pointer"}
                 initial={{x:"-100%"}}
                 animate={{x:0}}
                 exit={{x:"-100%"}}
@@ -821,7 +821,7 @@ export default function AdminIndex(props) {
                 />
                 {currentPlato || currentCategoria ? null :
                     <div
-                        className='flex justify-center bg-verde p-2 mt-5'
+                        className='cursor-pointer flex justify-center bg-verde p-2 mt-5'
                         onClick={() => setCurrentCategoria({ adornos: {}, new: true })}
                     >
 
@@ -839,7 +839,7 @@ export default function AdminIndex(props) {
                 />
                 {currentPlato || currentCategoria ? null :
                     <div
-                        className='flex justify-center bg-verde p-2 mt-5'
+                        className='cursor-pointer flex justify-center bg-verde p-2 mt-5'
                         onClick={() => setCurrentCategoria({ adornos: {}, new: true })}
                     >
 
