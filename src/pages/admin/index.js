@@ -103,7 +103,7 @@ const PlatoItem = (props) => {
         id={`plato-${plato._id}`}
         className="flex px-2 align-center  justify-between px-1 py-3 md:px-3">
         <div
-            className="p-2 flex w-3/4 font-bold"
+            className="p-2 flex w-3/4"
         >
             {plato.nombre}
         </div>
@@ -120,8 +120,8 @@ const CategoriaItem = (props) => {
     const { categoria, platos, setCurrentPlato, setCurrentCategoria } = props
     ////console.log(platos)
     return (
-        <div key={categoria._id} className=" w-full bg-verde rounded">
-            <p className="py-3 my-4 text-xl flex justify-between px-2 font-bold">{categoria.titulo.toUpperCase()}
+        <div key={categoria._id} className="shadow-xl w-full bg-verde">
+            <p className="py-3 my-4 text-xl flex justify-between px-2 ">{categoria.titulo.toUpperCase()}
                 <span
                     className="text-xs bg-rosa p-2 rounded font-bold"
                     onClick={() => { setCurrentCategoria(categoria) }}
@@ -294,7 +294,7 @@ const PlatoEditorForm = (props) => {
 
             <EditAlergenos setAlergenosPlato={setAlegenosPlato} alergenosPlato={plato.new ? [] : plato.alergenos} />
 
-            <div className='flex float md:fixed p-2 w-full justify-around gap-2  bottom-4'>
+            <div className='flex float bg-rosa  p-2 w-full justify-around gap-2  bottom-4'>
                 <button
                     className='btn w-2/3   bg-verde rounded '
                     onClick={(e) => {
@@ -356,7 +356,7 @@ const PlatoEditor = (props) => {
                 initial={{ x: "-100%" }}
                 animate={{ x: 0 }}
                 exit={{ x: "-100%" }}
-                className={"w-screen h-screen max-h-screen bg-rosa"}
+                className={"md:w-3/4 w-screen h-screen max-h-screen bg-verde"}
             >
                 <p
                     className="flex text-xl justify-end  mb-4 pr-4 pt-4"
@@ -388,9 +388,9 @@ const ImageSelector = (props) => {
     const activeClass = "border-4 border-white "
 
     return (
-        <div className='md:flex md:w-1/3 mt-2 px-3 border-r  py-2'>
+        <div className='lg:flex md:grid lg:w-full md:justify-center  mt-2 px-3 border-r  py-2'>
             <label
-                className="block uppercase tracking-wide text-xs font-bold mb-1">
+                className="block uppercase tracking-wide text-xs font-bold mb-1 lg:w-1/12">
                 {"Carta-" + tamPantalla}
             </label>
             <div className="flex gap-3 mt-2 px-3 py-4 overflow-scroll max-h-48 bg-verde ">
@@ -589,7 +589,7 @@ const CategoriaForm = (props) => {
                 </p>
 
             </div>
-            <div className="md:flex">
+            <div className="md:flex lg:grid">
 
                 <ImageSelector
                     adornos={adornos}
@@ -624,7 +624,7 @@ const CategoriaForm = (props) => {
 
             </div>
 
-            <div className='flex float md:fixed p-2 w-full justify-around gap-2  bottom-4'>
+            <div className='flex float  p-2 w-full justify-around gap-2  bottom-4'>
                 <button
                     className='btn w-2/3   bg-verde rounded '
                     onClick={(e) => {
@@ -676,13 +676,13 @@ const CategoriaEditor = (props) => {
     return (
         <AnimatePresence>
             {visible ? <motion.div 
-                className={"w-screen h-fit bg-rosa"}
+                className={"bg-rosa"}
                 initial={{x:"-100%"}}
                 animate={{x:0}}
                 exit={{x:"-100%"}}
                 >
                 <p
-                    className="flex justify-end  mb-4 pr-4 pt-4"
+                    className="flex md:3/4  justify-end  mb-4 pr-4 pt-4"
                     onClick={() => { hide() }}>
                     X
                 </p>
@@ -697,7 +697,7 @@ const CategoriaEditor = (props) => {
 const CategoriaList = (props) => {
     const { visible, platosHuerfanos, categorias, platos, setCurrentPlato, setCurrentCategoria } = props
     if (visible) {
-        return <div className='px-1 md:p-0'>
+        return <div className='px-2 md:p-0'>
             {
                 categorias.map((categoria) => {
                     const platosCategoria = platos.filter(plato => plato.categoria_id == categoria._id)
