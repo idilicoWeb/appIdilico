@@ -1,6 +1,6 @@
 import Image from "next/image"
 import Head from "next/head"
-import { useRouter } from "next/router"
+import MenuBar from "@/components/menuBar"
 import { useEffect, useState } from "react"
 import { motion } from "framer-motion"
 import { AnimatePresence } from "framer-motion"
@@ -16,7 +16,7 @@ const Hero = ({ children, hero }) => {
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
         transition={{ duration: 1, ease: "easeInOut" }}
-      >
+      > 
 
         <Image className="heroImage md:heroImageMD" src={hero.image} fill={true} priority={true} alt={"imagen de fondo que muestra una de nuestras imagenes favoritas"} />
 
@@ -47,30 +47,7 @@ const heroMockUp = [
   { text: "Come bien, vive rico", image: "/fotos/salon4.jpg" }
 ]
 
-const MenuBar = () => {
-  const router = useRouter()
 
-  const goTo = (url) => {
-    router.push(url)
-  }
-  return (
-    <div className="z-20 w-full absolute py-3 flex text-sm font-bold navegador border-b backdrop-blur">
-      <motion.div
-        initial={{ y: -100 }}
-        animate={{ y: 0 }}
-        transition={{ duration: 1, ease: "easeInOut", type: "spring", bounce: 0.5 }}
-        className="w-2/3 pl-2"
-      >
-        <Image alt="" src="/sello.png" width={48} height={48} priority={true} />
-      </motion.div>
-      <div className="flex gap-3  w-1/3 justify-end pr-3 align-middle ">
-        <div onClick={() => { goTo("/nosotros") }} className="cursor-pointer grid content-center">Nosotros</div>
-        <div onClick={() => { goTo("/carta") }} className="cursor-pointer grid content-center" >Carta</div>
-      </div>
-
-    </div>
-  )
-}
 
 
 
