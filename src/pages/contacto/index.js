@@ -3,6 +3,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faInstagram } from "@fortawesome/free-brands-svg-icons";
 import { faClock, faHeart, faLocationDot, faPhone } from "@fortawesome/free-solid-svg-icons";
 import MenuBar from "@/components/menuBar";
+import Link from "next/link";
 export default function Contacto() {
     return (
         <main className="relative max-w-screen max-h-screen text-xl flex justify-center">
@@ -21,7 +22,7 @@ export default function Contacto() {
                             <FontAwesomeIcon className="mr-2 text-2xl" icon={faPhone} />
                             Reservas:
                         </p>
-                        <a className="pl-3 text-2xl" href="tel:951157492">951157492</a>
+                        <Link className="pl-3 text-2xl" href="tel:951157492">951157492</Link>
                     </div>
                     <div>
 
